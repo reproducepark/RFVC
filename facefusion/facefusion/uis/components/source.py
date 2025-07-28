@@ -36,7 +36,10 @@ def render() -> None:
 	SOURCE_IMAGE = gradio.Image(
 		value = source_image_path if has_source_image else None,
 		visible = has_source_image,
-		show_label = False
+		show_label = False,
+		container = True,  # 컨테이너 모드로 설정
+		height = 200,      # 표시 높이만 제한
+		width = 200        # 표시 너비만 제한
 	)
 	register_ui_component('source_audio', SOURCE_AUDIO)
 	register_ui_component('source_image', SOURCE_IMAGE)
@@ -55,7 +58,7 @@ def update(files : List[File]) -> Tuple[gradio.Audio, gradio.Image]:
 		source_audio_path = get_first(filter_audio_paths(file_names))
 		source_image_path = get_first(filter_image_paths(file_names))
 		state_manager.set_item('source_paths', file_names)
-		return gradio.Audio(value = source_audio_path, visible = has_source_audio), gradio.Image(value = source_image_path, visible = has_source_image)
+		return gradio.Audio(value = source_audio_path, visible = has_source_audio), gradio.Image(value = source_image_path, visible = has_source_image, container = True, height = 200, width = 200)
 
 	state_manager.clear_item('source_paths')
 	return gradio.Audio(value = None, visible = False), gradio.Image(value = None, visible = False)
