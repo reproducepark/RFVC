@@ -259,7 +259,8 @@ def open_stream(stream_mode : StreamMode, stream_resolution : str, stream_fps : 
 	if stream_mode == 'udp':
 		commands.extend(ffmpeg_builder.set_input('-'))
 		commands.extend(ffmpeg_builder.set_stream_mode('udp'))
-		commands.extend(ffmpeg_builder.set_stream_quality(2000))
+		commands.extend(ffmpeg_builder.set_stream_quality(8000))  # 비트레이트 증가 (2000k -> 8000k)
+		commands.extend(['-pix_fmt', 'yuv422p'])  # 더 나은 색상 품질을 위한 픽셀 포맷
 		commands.extend(ffmpeg_builder.set_output('udp://localhost:27000?pkt_size=1316'))
 
 	if stream_mode == 'v4l2':
