@@ -159,17 +159,20 @@ def run(ui: gr.Blocks) -> None:
 		
 		# VoiceConverter가 사용 가능한지 확인
 		if hasattr(voice_converter, 'available') and voice_converter.available:
-			# 모델 로드 시도
-			# 현재 디렉토리에서 seed-vc 디렉토리로의 경로 설정
-			current_dir = os.path.dirname(__file__)
-			layouts_dir = os.path.dirname(current_dir)
-			components_dir = os.path.dirname(layouts_dir)
-			uis_dir = os.path.dirname(components_dir)
-			facefusion_dir = os.path.dirname(uis_dir)
-			project_root = os.path.dirname(facefusion_dir)
-			
-			checkpoint_path = os.path.join(project_root, "seed-vc", "runs", "yoon2", "ft_model.pth")
-			config_path = os.path.join(project_root, "seed-vc", "runs", "yoon2", "config_dit_mel_seed_uvit_xlsr_tiny.yml")
+			# 모델 로드 시도 - 절대경로 사용
+			# 창모
+			# checkpoint_path = r"C:\Users\reproducepark\workspace\face-vc\seed-vc\runs\changmo\ft_model.pth"
+			# config_path = r"C:\Users\reproducepark\workspace\face-vc\seed-vc\runs\changmo\config_dit_mel_seed_uvit_xlsr_tiny.yml"
+			# 일반
+			config_path = r"C:\Users\reproducepark\workspace\face-vc\seed-vc\checkpoints\models--Plachta--Seed-VC\snapshots\257283f9f41585055e8f858fba4fd044e5caed6e\config_dit_mel_seed_uvit_xlsr_tiny.yml"
+			checkpoint_path = r"C:\Users\reproducepark\workspace\face-vc\seed-vc\checkpoints\models--Plachta--Seed-VC\snapshots\257283f9f41585055e8f858fba4fd044e5caed6e\DiT_uvit_tat_xlsr_ema.pth"
+
+			# 디버깅을 위한 경로 출력
+			# print(f"Project root: {project_root}")
+			print(f"Checkpoint path: {checkpoint_path}")
+			print(f"Config path: {config_path}")
+			print(f"Checkpoint exists: {os.path.exists(checkpoint_path)}")
+			print(f"Config exists: {os.path.exists(config_path)}")
 			
 			if os.path.exists(checkpoint_path) and os.path.exists(config_path):
 				success = voice_converter.load_models(checkpoint_path, config_path)
